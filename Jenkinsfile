@@ -7,7 +7,7 @@ pipeline {
         stage ('git pull') {
             steps {
                 echo 'PULLING CODE FORM GITHUB'
-                sh 'git pull https://github.com/tlprgit/j.git'
+                sh 'git clone https://github.com/tlprgit/j.git'
             }
         }
         stage ('LOG INTO ECR AND BUILD DOCKER IMAGES AND PUSH INTO ECR REPOS') {
