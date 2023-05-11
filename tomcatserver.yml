@@ -1,0 +1,96 @@
+---
+- name: starting container 1 in tomcat 1 instance
+  hosts: tag_Name_tom1
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: to install tomcat
+      yum:
+        name: tomcat
+        state: installed
+
+    - name: to start service
+      service:
+        name: tomcat
+        state: started
+
+    - name: to enable service
+      service:
+        name: tomcat
+        enabled: yes
+
+    - name: to install docker
+      yum:
+        name: docker
+        state: installed
+
+    - name: to start service
+      service:
+        name: docker
+        state: started
+
+    - name: to enable service
+      service:
+        name: docker
+        enabled: yes
+
+    - name: to stop previous containers
+      shell: docker stop cont1
+
+    - name: to remove container
+      shell: docker rm cont1
+
+    - name: to remove all docker images
+      shell: docker rmi $(docker images -q)
+
+    - name: pull image from ecr and run it
+      shell: docker run --name cont1 -itd -p 8080:8080
+
+
+- name: starting container 2 in tomcat 2 instance
+  hosts: tag_Name_tom2
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: to install tomcat
+      yum:
+        name: tomcat
+        state: installed
+
+    - name: to start service
+      service:
+        name: tomcat
+        state: started
+
+    - name: to enable service
+      service:
+        name: tomcat
+        enabled: yes
+
+    - name: to install docker
+      yum:
+        name: docker
+        state: installed
+
+    - name: to start service
+      service:
+        name: docker
+        state: started
+
+    - name: to enable service
+      service:
+        name: docker
+        enabled: yes
+
+    - name: to stop previous containers
+      shell: docker stop cont2
+
+    - name: to remove container
+      shell: docker rm cont2
+
+    - name: to remove all docker images
+      shell: docker rmi $(docker images -q)
+
+    - name: pull image from ecr and run it
+      shell: docker run --name cont2 -itd -p 8080:8080
+
